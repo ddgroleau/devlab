@@ -1,18 +1,15 @@
-import Layout from '@/components/Layout';
 import StyledLink from '@/components/StyledLink';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const Score = () => {
-    const router = useRouter();
-    return (
-        <Layout pageTitle='Your Score'>
-            <section className='container'>
-                <h1>You scored {router.query.correct}/{router.query.total}!</h1>
-                <StyledLink href="/">Play Again</StyledLink>
-            </section>
-            <style jsx>
-                {`
+  const router = useRouter();
+  return (
+    <section className='container'>
+      <h1>You scored {router.query.correct}/{router.query.total}!</h1>
+      <StyledLink href="/">Play Again</StyledLink>
+      <style jsx>
+        {`
                     .container {
                         display: flex;
                         flex-direction: column;
@@ -22,9 +19,9 @@ const Score = () => {
                         margin-block: 2rem;
                     }
                 `}
-            </style>
-        </Layout>
-    );
+      </style>
+    </section>
+  );
 
 };
 

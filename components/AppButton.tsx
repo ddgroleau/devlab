@@ -7,8 +7,6 @@ type AppButtonProps = {
     onClick: MouseEventHandler<HTMLButtonElement>|undefined
 }
 
-
-
 const AppButton = ({children, type, btnRef, onClick}:AppButtonProps) => {
 
     return (
