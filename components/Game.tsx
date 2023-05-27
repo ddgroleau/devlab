@@ -22,13 +22,6 @@ const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) =>
     const [correctAnswerCount,setCorrectAnswerCount] = useState<number>(0);
     const [questionsCompleted,setQuestionsCompleted] = useState<Question[]>([]);
 
-    useEffect(()=>{
-        return () => {
-            setCorrectAnswerCount(0);
-            setQuestionsCompleted([]);
-        };
-    },[]);
-
     const determineQuestionResponseState = (question:Question,recordedAnswer:string):QuestionResponseState => {
         return question.questionResponseStates.filter(s=>s.possibleAnswer=== recordedAnswer)[0]?.answerState
             || QuestionResponseState.UNANSWERED;
