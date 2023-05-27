@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React, {useContext, useEffect, useState} from "react";
 import {H1, HR, P, Span} from "@/components/Typography";
 import {BaseContext} from "@/context/BaseProvider";
+import {ServerResponses} from "@/models/ServerResponses";
 
 export interface GameRouteParams {
     difficulty?:string,
@@ -29,11 +30,7 @@ const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) =>
 
     const handleCalculateScore = () => {
         if(questionsCompleted.length !== questions.length) {
-            setToasts([{
-                message:"Please complete all of the questions",
-                success: false,
-                id: Date.now()
-            }]);
+            router.push("?error="+ServerResponses.IncompleteQuestions);
         } else {
             router.push(`/score?correct=${correctAnswerCount}&total=${questions.length}`);
         }

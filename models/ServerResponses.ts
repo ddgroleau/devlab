@@ -4,5 +4,6 @@ export enum ServerResponses {
     NotFound = "Not Found",
     InternalServerError = "Internal Server Error",
     NoConnection = "No Connection",
-    NoRecordsForSearchCriteria = "No Records Found for Search Criteria"
+    NoRecordsForSearchCriteria = "No Records Found for Search Criteria",
+    IncompleteQuestions = "Please complete all of the questions"
 }
