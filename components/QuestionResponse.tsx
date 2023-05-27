@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from "react";
 import CircleCheck from "./CircleCheck";
 import CircleX from "./CircleX";
-import {classNames} from "@/utils/styleUtils";
+import {classNames, conditional} from "@/utils/styleUtils";
 
 type QuestionResponseProps = {
     text:string, 
@@ -24,16 +24,16 @@ export default function QuestionResponse({text,state,onClick}:QuestionResponsePr
             iconStyle: { 
                 position: "absolute", 
                 marginTop: "-1rem", 
-                marginLeft: "-.7rem", 
-            }, 
+                marginLeft: "-.7rem",
+            },
             containerClass: "" 
         };
         switch(state) {
         case QuestionResponseState.ANSWERED :
-            styles.containerClass = "opacity-4";
+            styles.containerClass = "border border-secondary dark:border-dark-secondary";
             break;
         case QuestionResponseState.CORRECT_INACTIVE :
-            styles.containerClass = "opacity-4 border border-success";
+            styles.containerClass = "border border-success";
             break;
         case QuestionResponseState.CORRECT_ACTIVE :
             styles.containerClass = "border border-success";
@@ -42,7 +42,8 @@ export default function QuestionResponse({text,state,onClick}:QuestionResponsePr
             styles.containerClass = "border border-danger";
             break;
         default:
-            styles.containerClass = "hover:bg-accent hover:text-itemSelected";
+            styles.containerClass =
+                "border border-secondary dark:border-dark-secondary  hover:bg-accent hover:text-itemSelected";
             break;
         }
         return styles;
@@ -51,17 +52,22 @@ export default function QuestionResponse({text,state,onClick}:QuestionResponsePr
     const styles = applyStateStyles(state);
 
     return (
-        <div>
+        <div 
+            className={conditional(
+                state === QuestionResponseState.ANSWERED || state === QuestionResponseState.CORRECT_INACTIVE,
+                "opacity-40")
+            }
+        >
             {(state === QuestionResponseState.CORRECT_ACTIVE || state === QuestionResponseState.CORRECT_INACTIVE) 
                 && <CircleCheck style={styles.iconStyle}/>}
             {state === QuestionResponseState.INCORRECT && <CircleX style={styles.iconStyle}/>}
             <button 
                 onClick={onClick} 
                 className={classNames(
-                    styles.containerClass,
-                    "border border-secondary dark:border-dark-secondary rounded-2xl py-2 px-4",
-                    "min-w-[8rem] text-secondary dark:text-dark-secondary lowercase"
-                )} 
+                    "rounded-2xl py-2 px-4",
+                    "min-w-[8rem] text-secondary dark:text-dark-secondary lowercase",
+                    styles.containerClass
+                )}
                 disabled={state !== QuestionResponseState.UNANSWERED}
             >
                 {text}
