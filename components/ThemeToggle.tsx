@@ -1,20 +1,11 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, {memo, useContext, useEffect, useMemo, useState} from "react";
 import {Span} from "@/components/Typography";
 import {classNames, conditional} from "@/utils/styleUtils";
+import {BaseContext} from "@/context/BaseProvider";
 
 const ThemeToggle = ({navIsOpen}:{navIsOpen:boolean}) => {
-    const [theme, setTheme] = useState<string|undefined>(undefined);
+    const {theme,setColorMode} = useContext(BaseContext);
     const isDarkTheme = theme !== "light";
-
-    const setColorMode = (theme:string) => {
-        document.documentElement.setAttribute("class",theme);
-        localStorage.setItem("theme",theme);
-        setTheme(theme);
-    };
-
-    useEffect(()=> {
-        setColorMode(localStorage.getItem("theme") || "light");
-    },[]);
 
     const handleClick = () => {
         const theme = isDarkTheme ? "light" : "dark";
@@ -40,7 +31,7 @@ const ThemeToggle = ({navIsOpen}:{navIsOpen:boolean}) => {
                         "bg-slider dark:dark-bg-slider rounded-2xl",
                         conditional(isDarkTheme, "active")
                     )}>
-                        <span className={classNames(
+                        <span role="button" className={classNames(
                             "bg-round dark:dark-bg-round border border-roundBorder left-[34px] top-[2px]",
                             "absolute rounded-2xl h-[24px] w-[24px]",
                             conditional(isDarkTheme, "translate-x-[-32px]")

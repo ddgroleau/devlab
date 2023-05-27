@@ -43,9 +43,14 @@ const AppSelect = ({
                     className={classNames(
                         "font-xl border border-inputBorder dark:border-dark-inputBorder rounded-xl",
                         "pt-2 pr-12 pb-2 pl-4 dark:text-dark-secondary",
-                        "bg-background dark:bg-dark-background",
+                        "bg-background dark:bg-dark-background appearance-none lowercase transition-none",
                         "focus:outline-2 focus:outline-secondary dark:focus:outline-dark-secondary",
-                        "focus:text-itemSelected appearance-none lowercase"
+                        "focus:text-itemSelected",
+                        "active:outline-2 active:outline-secondary dark:active:outline-dark-secondary",
+                        "active:text-itemSelected",
+                        "focus-visible::outline-2 focus-visible:outline-secondary",
+                        "dark:focus-visible:outline-dark-secondary",
+                        "focus-visible:text-itemSelected",
                     )}
                 >
                     {defaultOption && 

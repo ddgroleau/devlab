@@ -20,7 +20,7 @@ export default class Question {
     }
 
     public static create(index:number,question:string,correctAnswer:string,possibleAnswers:string[]):Question {
-        return new Question(index,question,correctAnswer,possibleAnswers);
+        return  JSON.parse(JSON.stringify(new Question(index,question,correctAnswer,possibleAnswers)));
     }
 
 }

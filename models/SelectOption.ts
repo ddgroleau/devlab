@@ -6,6 +6,6 @@ export default class SelectOption {
         this.innerText = innerText;
     }
     public static create(value:string, innerText:string) : SelectOption {
-        return new SelectOption(value,innerText);
+        return JSON.parse(JSON.stringify(new SelectOption(value,innerText)));
     }
 }

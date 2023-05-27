@@ -46,5 +46,9 @@ export const Span = ({children,className}:TypographyProps) => {
     </span> ;
 };
 
+export const HR = () => {
+    return <hr className="text-secondary dark:text-dark-secondary opacity-25"/>;
+};
+
 
 

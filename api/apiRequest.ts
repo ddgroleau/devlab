@@ -1,20 +1,7 @@
 import {redirect} from "next/navigation";
 import {RedirectType} from "next/dist/client/components/redirect";
-
-export enum CacheOptions {
-    Indefinite = "force-cache",
-    Revalidate = "revalidate",
-    NoStore = "no store",
-}
-
-export enum ServerResponses {
-    Success= "Success",
-    BadRequest = "Bad Request",
-    NotFound = "Not Found",
-    InternalServerError = "Internal Server Error",
-    NoConnection = "No Connection",
-    NoRecordsForSearchCriteria = "No Records Found for Search Criteria"
-}
+import {ServerResponses} from "@/models/ServerResponses";
+import {CacheOptions} from "@/models/CacheOptions";
 
 export const resolveResponse = (status?:number) => {
     switch (status) {
@@ -38,6 +25,7 @@ export interface ApiRequest {
     cacheOption?:CacheOptions,
     cacheTimeToLive?:number
 }
+
 
 export const apiRequest = async <T>({ path, headers, redirectPath, cacheOption = CacheOptions.Indefinite, cacheTimeToLive}:ApiRequest):Promise<T> => {
     const baseApiUri = process.env.NEXT_PUBLIC_API_URI;

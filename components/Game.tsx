@@ -2,12 +2,11 @@
 
 import AppButton from "@/components/AppButton";
 import QuestionResponse, { QuestionResponseState } from "@/components/QuestionResponse";
-import Toast, { ToastMessage } from "@/components/Toast";
 import Question from "@/models/Question";
 import { useRouter } from "next/navigation";
-import React, {useEffect, useState} from "react";
-import Divider from "@/components/Divider";
-import {H1, P, Span} from "@/components/Typography";
+import React, {useContext, useEffect, useState} from "react";
+import {H1, HR, P, Span} from "@/components/Typography";
+import {BaseContext} from "@/context/BaseProvider";
 
 export interface GameRouteParams {
     difficulty?:string,
@@ -18,11 +17,17 @@ export interface GameRouteParams {
 
 const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) => {
     const router = useRouter();
-
+    const { setToasts } = useContext(BaseContext);
     const [allQuestions,setAllQuestions] = useState<Question[]>(questions);
     const [correctAnswerCount,setCorrectAnswerCount] = useState<number>(0);
     const [questionsCompleted,setQuestionsCompleted] = useState<Question[]>([]);
-    const [toasts,setToasts] = useState<ToastMessage[]>([]);
+
+    useEffect(()=>{
+        return () => {
+            setCorrectAnswerCount(0);
+            setQuestionsCompleted([]);
+        };
+    },[]);
 
     const determineQuestionResponseState = (question:Question,recordedAnswer:string):QuestionResponseState => {
         return question.questionResponseStates.filter(s=>s.possibleAnswer=== recordedAnswer)[0]?.answerState
@@ -96,7 +101,7 @@ const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) =>
                     { query?.tags && <Span><strong>Tags:</strong> {query?.tags?.split(",").join(", ")}</Span> }
                     <Span><strong>Score:</strong> {correctAnswerCount}/{questions.length}</Span>
                 </div>
-                <Divider/>
+                <HR/>
             </section>
             <section className='flex flex-col gap-2 mt-4'>
                 {allQuestions.map((question,index) => {
@@ -116,7 +121,7 @@ const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) =>
                                     );
                                 })}
                             </div>
-                            <Divider/>
+                            <HR/>
                         </div>
                     );
                 })}
@@ -125,7 +130,6 @@ const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) =>
               calculate score
                     </AppButton>
                 </div>
-                <Toast messages={toasts} />
             </section>
         </div>
      

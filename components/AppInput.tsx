@@ -45,7 +45,7 @@ const AppInput = ({
                     "text-lg focus:outline-2 focus:outline-secondary dark:focus:outline-dark-secondary",
                     "focus-visible:outline-2 focus-visible:outline-secondary",
                     "dark:focus-visible:outline-dark-secondary dark:text-dark-secondary",
-                    "active:outline-2 active:outline-secondary dark:active:outline-dark-secondary"
+                    "active:outline-2 active:outline-secondary dark:active:outline-dark-secondary transition-none"
                 )}
                 style={{ width: inputRef?.current ? 
                     `calc(5rem + ${inputRef.current.value.length}rem)` : "5rem" }} 

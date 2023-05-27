@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, {ReactNode} from "react";
 import NavBar from "@/components/NavBar";
 import { Roboto_Slab } from "next/font/google";
-import BaseProvider from "@/components/BaseProvider";
+import BaseProvider from "@/context/BaseProvider";
 
 const robotoSlab = Roboto_Slab({ subsets: ["latin"] });
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: ReactNode,
 }) {
     return (
-        <html lang="en" className={"dark"}>
+        <html lang="en">
             <body className={robotoSlab.className}>
                 <div className="flex flex-col min-h-screen bg-background dark:bg-dark-background">
                     <Head>
@@ -40,26 +40,26 @@ export default function RootLayout({
                         <link rel="icon" href="/favicon.ico" />
                         <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
                     </Head>
-                    <header className='flex h-[82px] bg-nav dark:bg-dark-nav'>
-                        <NavBar/>
-                    </header>
-                    <main className="flex-1 w-full flex justify-center">
-                        <section className='w-[95%]'>
-                            <BaseProvider>
+                    <BaseProvider>
+                        <header className='flex h-[82px] bg-nav dark:bg-dark-nav'>
+                            <NavBar/>
+                        </header>
+                        <main className="flex-1 w-full flex justify-center">
+                            <section className='w-[95%]'>
                                 {children}
-                            </BaseProvider>
-                        </section>
-                    </main>
-                    <footer className="flex w-full justify-center bg-nav dark:bg-dark-nav">
-                        <section className='w-[95%] flex justify-between py-2'>
-                            <small className="text-secondary dark:text-dark-secondary">
+                            </section>
+                        </main>
+                        <footer className="flex w-full justify-center bg-nav dark:bg-dark-nav">
+                            <section className='w-[95%] flex justify-between py-2'>
+                                <small className="text-secondary dark:text-dark-secondary">
                                 ©{new Date().getFullYear()} DevLab
-                            </small>
-                            <small className="text-secondary dark:text-dark-secondary"><Link href={"/privacy"}>
+                                </small>
+                                <small className="text-secondary dark:text-dark-secondary"><Link href={"/privacy"}>
                               Privacy and Terms of Use</Link>
-                            </small>
-                        </section>
-                    </footer>
+                                </small>
+                            </section>
+                        </footer>
+                    </BaseProvider>
                 </div>
             </body>
         </html>
