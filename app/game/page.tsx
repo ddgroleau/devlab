@@ -4,6 +4,7 @@ import {getQuestions} from "@/api/queries";
 
 const GamePage = async ({searchParams:{category,difficulty,questionCount,tags}}:{searchParams:GameRouteParams}) => {
     const { questions} = await getQuestions({ category, difficulty, questionCount, tags });
+    console.log(questions);
     return (
         <Game query={{ category, difficulty, questionCount, tags }} questions={questions}/>
     );

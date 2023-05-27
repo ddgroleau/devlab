@@ -18,8 +18,8 @@ export interface GameRouteParams {
 
 const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) => {
     const router = useRouter();
-    const { setToasts } = useContext(BaseContext);
-    const [allQuestions,setAllQuestions] = useState<Question[]>(questions);
+    const [allQuestions,setAllQuestions] = useState<Question[]>(
+        [...questions.map(q => Question.create(q.id,q.questionText, q.correctAnswer,q.answerOptions))]);
     const [correctAnswerCount,setCorrectAnswerCount] = useState<number>(0);
     const [questionsCompleted,setQuestionsCompleted] = useState<Question[]>([]);
 
@@ -29,10 +29,10 @@ const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) =>
     };
 
     const handleCalculateScore = () => {
-        if(questionsCompleted.length !== questions.length) {
-            router.push("?error="+ServerResponses.IncompleteQuestions);
+        if(questionsCompleted.length !== allQuestions.length) {
+            router.push("/game?error="+ServerResponses.IncompleteQuestions);
         } else {
-            router.push(`/score?correct=${correctAnswerCount}&total=${questions.length}`);
+            router.push(`/score?correct=${correctAnswerCount}&total=${allQuestions.length}`);
         }
     };
 
@@ -74,14 +74,14 @@ const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) =>
         setCorrectAnswerCount([...questionsCompleted, question]
             .filter(q => q.recordedAnswer === q.correctAnswer).length);
 
-        setAllQuestions(questions => [
+        setAllQuestions(allQuestions => [
             question,
-            ...questions.filter(q => q.questionText !== question.questionText)
+            ...allQuestions.filter(q => q.questionText !== question.questionText)
         ].sort((a,b)=>a.id - b.id));
     };
 
     return (
-        <div>
+        <div key={questions.length}>
             <section>
                 <H1>Your Questions</H1>
                 <div className='flex gap-8 flex-row flex-wrap mb-2'>
@@ -89,7 +89,7 @@ const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) =>
                     { query?.category &&  <Span><strong>Category:</strong> {query?.category}</Span> }
                     { !allQuestions ? "" : <Span><strong>Total Questions:</strong> {allQuestions.length}</Span> }
                     { query?.tags && <Span><strong>Tags:</strong> {query?.tags?.split(",").join(", ")}</Span> }
-                    <Span><strong>Score:</strong> {correctAnswerCount}/{questions.length}</Span>
+                    <Span><strong>Score:</strong> {correctAnswerCount}/{allQuestions.length}</Span>
                 </div>
                 <HR/>
             </section>
