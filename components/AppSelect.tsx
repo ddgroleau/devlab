@@ -1,5 +1,7 @@
-import SelectOption from '@/models/SelectOption';
-import React, { MutableRefObject, useRef } from 'react';
+import SelectOption from "@/models/SelectOption";
+import React, { MutableRefObject, useRef } from "react";
+import {Label} from "@/components/Typography";
+import {classNames} from "@/utils/styleUtils";
 
 type AppSelectProps = {
     id:string,
@@ -26,72 +28,41 @@ const AppSelect = ({
 }:AppSelectProps
 ) => {
     return (
-        <>
-            <label htmlFor={id}>{label}
-                <div className="select-wrapper">
-                    <select 
-                        value={value} 
-                        id={id} 
-                        ref={selectRef}
-                        name={name}
-                        required={required}
-                        disabled={disabled}   
-                    >
-                        {defaultOption && 
-                        <option value={defaultOption?.value}>
+        <Label htmlFor={id} className="flex flex-col gap-2 capitalize">
+            {label}
+            <div className={classNames("relative after:content-['‹'] after:-rotate-90 after:text-4xl",
+                "after:absolute after:pointer-events-none after:-ml-8 after:mt-1 after:text-dark-secondary"
+            )}>
+                <select 
+                    value={value} 
+                    id={id} 
+                    ref={selectRef}
+                    name={name}
+                    required={required}
+                    disabled={disabled}
+                    className={classNames(
+                        "font-xl border border-inputBorder dark:border-dark-inputBorder rounded-xl",
+                        "pt-2 pr-12 pb-2 pl-4 dark:text-dark-secondary",
+                        "bg-background dark:bg-dark-background",
+                        "focus:outline-2 focus:outline-secondary dark:focus:outline-dark-secondary",
+                        "focus:text-itemSelected appearance-none lowercase"
+                    )}
+                >
+                    {defaultOption && 
+                        <option value={defaultOption?.value} className="focus:bg-accent">
                             {defaultOption?.innerText}
                         </option>}
-                        {options.map((option,index)=> 
-                            <option 
-                                key={index} 
-                                value={option.value}
-                            >
-                                {option.innerText}
-                            </option>)}
-                    </select>
-                </div>
-            </label>
-            <style jsx>
-                {`
-                    label {
-                        display: flex;
-                        flex-direction: column;
-                        gap: 0.25rem;
-                        text-transform: capitalize;
-                    }
-                    .select-wrapper {
-                        position: relative;
-                    }
-                    .select-wrapper::after {
-                        content: "‹";
-                        transform: rotate(270deg);
-                        font-size: 2rem;
-                        position: absolute;
-                        pointer-events: none;
-                        margin-left: -2rem;
-                    }
-                    select {
-                        border: solid var(--inputBorder) 1px;
-                        border-radius: 12px;
-                        padding: 0.5rem 3rem 0.5rem 1rem;
-                        background: var(--background);
-                        -webkit-appearance: none;
-                        appearance: none;
-                        transition: 0s;
-                    }
-                    select:focus {
-                        outline: solid var(--secondary) 2px;
-                        color: var(--itemSelected);
-                    }
-                    select, option {
-                        text-transform: lowercase;
-                    }
-                    option:focus {
-                        background: var(--accent);
-                    }
-                `}
-            </style>
-        </>
+                    {options.map((option,index)=> 
+                        <option 
+                            key={index} 
+                            value={option.value}
+                            className="focus:bg-accent"
+                        >
+                            {option.innerText}
+                        </option>)}
+                </select>
+            </div>
+        </Label>
     );
 };
 

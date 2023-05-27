@@ -1,4 +1,5 @@
-import React, { Dispatch, MutableRefObject, SetStateAction, useRef } from 'react';
+import React, { Dispatch, MutableRefObject, SetStateAction, useRef } from "react";
+import {classNames, conditional} from "@/utils/styleUtils";
 
 type QuestionTagProps = {
     value:string
@@ -13,38 +14,19 @@ const QuestionTag = ({value,innerText,selectedTags,setSelectedTags}:QuestionTagP
             setSelectedTags(tags => [...tags.filter(tag=> tag !== value)]);
     };
     return (
-        <>
-            <button
-                type="button"
-                className={!selectedTags.includes(value) ? 'tag-unselected' : 'tag-selected'}
-                key={value}
-                onClick={handleClick}
-            >
-            + {innerText}
-            </button>
-            <style jsx>
-                {`
-                button {
-                    border: solid var(--inputBorder) 2px;
-                    border-radius: 12px;
-                    padding: 0.5rem 1rem;
-                    text-transform: lowercase;
-                    font-size: 1rem;
-                }
-                button:hover, button:active {
-                    background: var(--accent);
-                }
-                .tag-unselected {
-                    background: var(--background);
-                }
-                .tag-selected {
-                    background: var(--accent);
-                    border: solid var(--secondary) 2px;
-                    color: var(--itemSelected);
-                }
-            `}
-            </style>
-        </>
+        <button
+            type="button"
+            className={classNames(
+                conditional(!selectedTags.includes(value),
+                    "bg-background dark:bg-dark-background",
+                    "bg-accent border-2 border-secondary dark:border-dark-secondary text-itemSelected"),
+                "border-2 border-inputBorder rounded-xl px-4 py-2 lowercase hover:bg-accent",
+            )}
+            key={value}
+            onClick={handleClick}
+        >
+     + {innerText}
+        </button>
     );
 };
 

@@ -5,9 +5,10 @@
   ],
   "plugins": ["jsx-a11y"],
   "rules": {
-    "indent": ["warn", 2],
+    "indent": ["warn", 4],
     "max-len": ["warn", 120],
     "semi": ["error", "always"],
-    "no-undef": "error"
+    "no-undef": "error",
+    "quotes": ["warn","double"]
   }
 }

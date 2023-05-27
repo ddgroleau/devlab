@@ -1,5 +1,6 @@
-import Link from 'next/link';
-import React, { MouseEventHandler } from 'react';
+import Link from "next/link";
+import React from "react";
+import {classNames} from "@/utils/styleUtils";
 
 type StyledLinkProps = {
     children: string,
@@ -7,11 +8,14 @@ type StyledLinkProps = {
 }
 
 const StyledLink = ({children, href}:StyledLinkProps) => {
-
     return (
         <Link
             href={href}
-            className="styled-link"
+            className={classNames(
+                "text-2xl block w-fit border-primary dark:border-dark-primary border-2 rounded-lg px-4 py-2",
+                "text-primary dark:text-dark-primary lowercase",
+                "hover:bg-accent hover:text-itemSelected hover:no-underline"
+            )}
         >
             {children}
         </Link>

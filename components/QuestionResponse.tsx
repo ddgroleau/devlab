@@ -1,6 +1,7 @@
-import React, { MouseEventHandler } from 'react';
-import CircleCheck from './CircleCheck';
-import CircleX from './CircleX';
+import React, { MouseEventHandler } from "react";
+import CircleCheck from "./CircleCheck";
+import CircleX from "./CircleX";
+import {classNames} from "@/utils/styleUtils";
 
 type QuestionResponseProps = {
     text:string, 
@@ -29,19 +30,19 @@ export default function QuestionResponse({text,state,onClick}:QuestionResponsePr
         };
         switch(state) {
         case QuestionResponseState.ANSWERED :
-            styles.containerClass = "answered";
+            styles.containerClass = "opacity-4";
             break;
         case QuestionResponseState.CORRECT_INACTIVE :
-            styles.containerClass = "correct-inactive";
+            styles.containerClass = "opacity-4 border border-success";
             break;
         case QuestionResponseState.CORRECT_ACTIVE :
-            styles.containerClass = "correct-active";
+            styles.containerClass = "border border-success";
             break;
         case QuestionResponseState.INCORRECT :
-            styles.containerClass = "incorrect";
+            styles.containerClass = "border border-danger";
             break;
         default:
-            styles.containerClass = "unanswered";
+            styles.containerClass = "hover:bg-accent hover:text-itemSelected";
             break;
         }
         return styles;
@@ -56,42 +57,15 @@ export default function QuestionResponse({text,state,onClick}:QuestionResponsePr
             {state === QuestionResponseState.INCORRECT && <CircleX style={styles.iconStyle}/>}
             <button 
                 onClick={onClick} 
-                className={styles.containerClass} 
+                className={classNames(
+                    styles.containerClass,
+                    "border border-secondary dark:border-dark-secondary rounded-2xl py-2 px-4",
+                    "min-w-[8rem] text-secondary dark:text-dark-secondary lowercase"
+                )} 
                 disabled={state !== QuestionResponseState.UNANSWERED}
             >
                 {text}
             </button>
-            <style jsx>
-                {`
-                    button {
-                        border: solid var(--secondary) 1px;
-                        border-radius: 30px;
-                        padding: 0.5rem 1rem;
-                        min-width: 8rem;
-                        display:block;
-                        color: var(--secondary);
-                        text-transform: lowercase;
-                    }
-                    .unanswered:hover {
-                        background: var(--accent);
-                        color: var(--itemSelected);
-                    }
-                    .answered {
-                        opacity: .4;
-                    }
-                    .correct-inactive {
-                        opacity: .4;
-                        border: solid var(--success) 1px;
-                        transition: all 0s;
-                    }
-                    .correct-active {
-                        border: solid var(--success) 2px;
-                    }
-                    .incorrect {
-                        border: solid var(--failure) 2px;
-                    }
-                `}
-            </style>
         </div>
     );
 };
