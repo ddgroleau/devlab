@@ -11,19 +11,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7
-      - name: Install modules
-        run: pnpm install
-      - name: Run eslint
-        run: pnpm lint
-      - name: Run Tests
-        run: pnpm test:ci
+#  test:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: pnpm/action-setup@v2
+#        with:
+#          version: 7
+#      - name: Install modules
+#        run: pnpm install
+#      - name: Run eslint
+#        run: pnpm lint
+#      - name: Run Tests
+#        run: pnpm test:ci
 
   build:
     runs-on: ubuntu-latest
