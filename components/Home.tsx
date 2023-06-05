@@ -1,5 +1,4 @@
 "use client";
-
 import AppButton from "@/components/AppButton";
 import AppInput from "@/components/AppInput";
 import AppSelect from "@/components/AppSelect";
@@ -7,9 +6,8 @@ import QuestionTag from "@/components/QuestionTag";
 import {FormEvent, MutableRefObject, useRef, useState} from "react";
 import { useGetTags } from "@/hooks/query";
 import Tag from "@/models/Tag";
-import Toast, { ToastMessage } from "@/components/Toast";
 import SelectOption from "@/models/SelectOption";
-import {H1, H2, H3, HR, Label, P, Span} from "@/components/Typography";
+import {H1, H2, H3, HR, Label, P} from "@/components/Typography";
 import {useRouter} from "next/navigation";
 
 type HomeProps = {
@@ -24,7 +22,7 @@ const Home = ({difficulties,categories}:HomeProps) => {
     const numberQuestionsRef:MutableRefObject<any> = useRef();
 
     const [selectedTags,setSelectedTags] = useState<string[]>([]);
-    const {data:tags,isLoading:isFetchingTags} = useGetTags(
+    const {data:tags} = useGetTags(
         categoryRef.current && categoryRef.current.value,difficultyRef.current && difficultyRef.current.value);
 
     const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
@@ -82,7 +80,7 @@ const Home = ({difficulties,categories}:HomeProps) => {
                 {!tags || tags.length <= 0 ? "" :
                     <div className="w-full flex flex-col gap-1">
                         <Label htmlFor="tags">Tags</Label>
-                        <div className='flex flex-row flex-wrap gap-2'>
+                        <div className="flex flex-row flex-wrap gap-2">
                             {tags.map((tag:Tag,index:number)=> {
                                 return (
                                     <QuestionTag
@@ -97,7 +95,7 @@ const Home = ({difficulties,categories}:HomeProps) => {
                         </div>
                     </div>
                 }
-                <div className='mt-6 mb-12 w-full'>
+                <div className="mt-6 mb-12 w-full">
                     <AppButton type="submit" onClick={()=>{}}>
                 begin
                     </AppButton>

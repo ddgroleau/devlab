@@ -13,19 +13,15 @@ export const getQuestions = async (params:GameRouteParams) => {
     searchParams.append("difficulty",params.difficulty ?? "");
     searchParams.append("questionCount",params.questionCount ?? "");
     searchParams.append("tags",params.tags ?? "");
+    const pathPlusParams =  pathname + "?" + searchParams.toString();
 
-    const pathPlusParams =  pathname + "?" +searchParams.toString();
-
-    const questionData:Question[] = await apiRequest<Question[]>(
+    const questions:Question[] = await apiRequest<Question[]>(
         {
             path:pathPlusParams,
             redirectPath:"/",
             cacheOption:CacheOptions.Revalidate,
             cacheTimeToLive:180
         });
-
-    const questions:Question[] =
-        questionData.map(q=>Question.create(q.id,q.questionText,q.correctAnswer,q.answerOptions));
 
     return {
         questions: questions,
@@ -38,7 +34,7 @@ export const getDifficulties = async () => {
         cacheOption: CacheOptions.Revalidate,
         cacheTimeToLive: 120
     });
-      
+
     return difficulties.map(d => SelectOption.create(d.id.toString(), d.displayText));
 };
 

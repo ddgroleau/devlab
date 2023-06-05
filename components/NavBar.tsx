@@ -11,21 +11,22 @@ const NavBar = () => {
     const pathname = usePathname();
     const [navIsOpen,setNavIsOpen] = useState<boolean>(false);
     const toggleMobileNav = () => {
+        setNavIsOpen(navIsOpen => !navIsOpen);
         navIsOpen ? document.body.removeAttribute("style")
             : document.body.setAttribute("style","overflow-y:hidden");
-        setNavIsOpen(!navIsOpen);
     };
     
     useEffect(()=> {
         const close = (event:MouseEvent) => {
-            if(!(event.target instanceof HTMLButtonElement) && !(event.target instanceof HTMLSpanElement))
+            if(!(event.target instanceof HTMLButtonElement) && !(event.target instanceof HTMLSpanElement)) {
                 setNavIsOpen(false);
+            }
         };
         if(navIsOpen) {
             window.addEventListener("click",close);
         }
         return ()=> window.removeEventListener("click",close);
-    });
+    },[navIsOpen]);
 
     return (
         <nav className={classNames(
@@ -46,9 +47,9 @@ const NavBar = () => {
             </Link>
             <button 
                 onClick={toggleMobileNav}
-                className="flex w-[40px] h-[25px] pt-[2px] absolute right-8 top-8 cursor-pointer lg:hidden"
+                className="flex w-[40px] h-[28px] pt-[4px] absolute right-8 top-8 cursor-pointer lg:hidden"
             >
-                <div
+                <span
                     className={classNames(
                         "inline-block w-[40px] bg-primary dark:bg-dark-primary transition translate-y-[8px]",
                         "after:content-[' '] after:flex after:h-[4px] after:min-w-[40px]",
@@ -59,11 +60,11 @@ const NavBar = () => {
                         "before:translate-y-[-12px] before:ease-in-out before:transition",
                         conditional(
                             navIsOpen,
-                            "h-0 after:rotate-45 after:translate-y-[-3px] before:-rotate-45 before:translate-y-[0px]",
+                            "h-0 after:rotate-45 after:translate-y-[-1px] before:-rotate-45 before:translate-y-[1px]",
                             "h-[4px]"
                         )
                     )}>
-                </div>
+                </span>
             </button>
             <ThemeToggle navIsOpen={navIsOpen}/>
         </nav>

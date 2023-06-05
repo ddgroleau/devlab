@@ -1,7 +1,8 @@
 "use client";
+/* eslint-disable no-unused-vars */
 import React, {createContext, ReactNode, SetStateAction, useEffect, useRef, useState} from "react";
 import Toast, {ToastMessage} from "@/components/Toast";
-import {useRouter, useSearchParams} from "next/navigation";
+import {useSearchParams} from "next/navigation";
 
 type BaseContext = {
     theme:string|undefined,
@@ -10,7 +11,8 @@ type BaseContext = {
 }
 
 export const BaseContext =
-    createContext({theme:"light",setColorMode:(theme:string)=>{},setToasts:()=>{}} as BaseContext);
+    createContext({theme:"light",setColorMode:(theme:string)=> { },
+        setToasts:()=>{}} as BaseContext);
 
 const BaseProvider = ({children}:{children:ReactNode}) => {
     const searchParams = useSearchParams();

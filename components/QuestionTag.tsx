@@ -1,4 +1,4 @@
-import React, { Dispatch, MutableRefObject, SetStateAction, useRef } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import {classNames, conditional} from "@/utils/styleUtils";
 
 type QuestionTagProps = {

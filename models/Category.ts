@@ -1,6 +1,5 @@
 type Category = {
     id:number;
-    value:string;
     displayText:string;
 }
 

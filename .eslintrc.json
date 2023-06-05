@@ -3,12 +3,17 @@
     "next/core-web-vitals",
     "plugin:jsx-a11y/recommended"
   ],
+  "env": {
+    "jest": true
+  },
   "plugins": ["jsx-a11y"],
   "rules": {
     "indent": ["warn", 4],
     "max-len": ["warn", 120],
     "semi": ["error", "always"],
     "no-undef": "error",
-    "quotes": ["warn","double"]
+    "quotes": ["warn","double"],
+    "no-console": "warn",
+    "no-unused-vars": "warn"
   }
 }

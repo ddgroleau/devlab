@@ -1,5 +1,5 @@
 import SelectOption from "@/models/SelectOption";
-import React, { MutableRefObject, useRef } from "react";
+import React, { MutableRefObject } from "react";
 import {Label} from "@/components/Typography";
 import {classNames} from "@/utils/styleUtils";
 

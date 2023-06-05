@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { MouseEventHandler } from "react";
 import CircleCheck from "./CircleCheck";
 import CircleX from "./CircleX";
@@ -33,7 +34,7 @@ export default function QuestionResponse({text,state,onClick}:QuestionResponsePr
             styles.containerClass = "border border-secondary dark:border-dark-secondary";
             break;
         case QuestionResponseState.CORRECT_INACTIVE :
-            styles.containerClass = "border border-success";
+            styles.containerClass = "border border-success delay-500";
             break;
         case QuestionResponseState.CORRECT_ACTIVE :
             styles.containerClass = "border border-success";
@@ -43,7 +44,7 @@ export default function QuestionResponse({text,state,onClick}:QuestionResponsePr
             break;
         default:
             styles.containerClass =
-                "border border-secondary dark:border-dark-secondary  hover:bg-accent hover:text-itemSelected";
+                "hover:bg-accent hover:text-itemSelected";
             break;
         }
         return styles;
@@ -52,20 +53,30 @@ export default function QuestionResponse({text,state,onClick}:QuestionResponsePr
     const styles = applyStateStyles(state);
 
     return (
-        <div 
-            className={conditional(
+        <div className={classNames(
+            "opacity-100",
+            conditional(
                 state === QuestionResponseState.ANSWERED || state === QuestionResponseState.CORRECT_INACTIVE,
-                "opacity-40")
-            }
+                "opacity-40"))}
         >
             {(state === QuestionResponseState.CORRECT_ACTIVE || state === QuestionResponseState.CORRECT_INACTIVE) 
-                && <CircleCheck style={styles.iconStyle}/>}
+                &&  <div className={classNames("opacity-0",conditional(
+                    state === QuestionResponseState.CORRECT_INACTIVE,
+                    "fade-in",
+                    "opacity-100"
+                ))}>
+                    <CircleCheck
+                        style={styles.iconStyle}
+                  
+                    />
+                </div>}
             {state === QuestionResponseState.INCORRECT && <CircleX style={styles.iconStyle}/>}
             <button 
                 onClick={onClick} 
                 className={classNames(
                     "rounded-2xl py-2 px-4",
-                    "min-w-[8rem] text-secondary dark:text-dark-secondary lowercase",
+                    "min-w-[8rem] max-w-[18rem] h-full text-secondary dark:text-dark-secondary lowercase",
+                    "border border-secondary dark:border-dark-secondary",
                     styles.containerClass
                 )}
                 disabled={state !== QuestionResponseState.UNANSWERED}

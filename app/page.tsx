@@ -1,5 +1,6 @@
 import Home from "@/components/Home";
 import {getCategories, getDifficulties} from "@/api/queries";
+import React from "react";
 
 const HomePage = async () => {
     const difficultiesData = getDifficulties();
