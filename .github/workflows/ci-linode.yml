@@ -67,5 +67,9 @@ jobs:
             && docker run -d -p "${envArray[0]}":3000 --name devlab --restart always \
             -e NODE_ENV="production" \
             dangroleau/devlab \
+            && docker container prune --force \
+            && docker network prune --force \
+            && docker image prune --force \
+            && docker volume prune --force \
             && exit \
             && exit 0;
