@@ -57,8 +57,10 @@ export const apiRequest = async <T>(
     const res = await fetch(baseApiUri + path, options);
     const resolvedResponse = await resolveResponse(res);
 
+    redirectPath = !redirectPath ? "" : redirectPath;
+
     if (!resolvedResponse.success) {
-        return redirect(redirectPath + `?error=${encodeURIComponent(resolvedResponse.message)}`);
+        return redirect((redirectPath + `?error=${encodeURIComponent(resolvedResponse.message)}`);
     }
 
     const jsonResponse =  await res.json();
