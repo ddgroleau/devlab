@@ -60,7 +60,7 @@ export const apiRequest = async <T>(
     redirectPath = !redirectPath ? "" : redirectPath;
 
     if (!resolvedResponse.success) {
-        return redirect((redirectPath + `?error=${encodeURIComponent(resolvedResponse.message)}`);
+        return redirect(redirectPath + `?error=${encodeURIComponent(resolvedResponse.message)}`);
     }
 
     const jsonResponse =  await res.json();
