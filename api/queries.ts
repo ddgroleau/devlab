@@ -9,7 +9,7 @@ import Category from "@/models/Category";
 export const getQuestions = async (params:GameRouteParams) => {
     const pathname = "/api/questions";
     const searchParams = new URLSearchParams;
-    searchParams.append("category",params.category ?? "");
+    searchParams.append("categories",params.categories ?? "");
     searchParams.append("difficulty",params.difficulty ?? "");
     searchParams.append("questionCount",params.questionCount ?? "");
     searchParams.append("tags",params.tags ?? "");

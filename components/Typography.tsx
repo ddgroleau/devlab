@@ -28,6 +28,12 @@ export const H3 = ({children,className}:TypographyProps) => {
     </h3> ;
 };
 
+export const H4 = ({children,className}:TypographyProps) => {
+    return <h4 className={classNames("text-xl text-primary dark:text-dark-primary",className)}>
+        {children as ReactNode}
+    </h4> ;
+};
+
 export const P = ({children,className}:TypographyProps) => {
     return <p className={classNames("text-xl text-secondary dark:text-dark-secondary",className)}>
         {children as ReactNode}

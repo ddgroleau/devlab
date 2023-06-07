@@ -4,19 +4,21 @@ import AppButton from "@/components/AppButton";
 import { QuestionResponseState } from "@/components/QuestionResponse";
 import Question from "@/models/Question";
 import { useRouter } from "next/navigation";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {H1, HR, Span} from "@/components/Typography";
 import {ServerResponses} from "@/models/ServerResponses";
 import InteractiveQuestion from "@/components/InteractiveQuestion";
+import {BaseContext} from "@/context/BaseProvider";
 
 export interface GameRouteParams {
     difficulty?:string,
     tags?:string,
-    category?:string,
+    categories?:string,
     questionCount?:string
 }
 
 const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) => {
+    const {setToasts} = useContext(BaseContext);
     const router = useRouter();
     const [allQuestions,setAllQuestions] = useState<Question[]>(
         [...questions.map(q =>
@@ -26,7 +28,7 @@ const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) =>
 
     const handleCalculateScore = () => {
         if(questionsCompleted.length !== allQuestions.length) {
-            router.push("/game?error="+ServerResponses.IncompleteQuestions);
+            return setToasts([{success:false,message:ServerResponses.IncompleteQuestions}]);
         } else {
             router.push(`/score?correct=${correctAnswerCount}&total=${allQuestions.length}`);
         }
