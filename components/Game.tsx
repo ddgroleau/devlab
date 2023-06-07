@@ -73,9 +73,11 @@ const Game = ({questions,query}:{questions:Question[],query:GameRouteParams}) =>
             .filter(q => q.recordedAnswer === q.correctAnswer).length);
 
         setAllQuestions(allQuestions => [
-            question,
-            ...allQuestions.filter(q => q.questionText !== question.questionText)
-        ].sort((a,b)=>a.id - b.id));
+            ...allQuestions.map(q => {
+                if(q.id === question.id) q = question;
+                return q;
+            })
+        ]);
     };
 
     return (
